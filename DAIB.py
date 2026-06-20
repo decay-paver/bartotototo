@@ -254,16 +254,16 @@ def update_user_settings(uid, key, value):
 def get_user_coinflip_limit(member):
     """
     Determine the maximum coins a user can flip based on their roles.
-    Counts the number of '+' at the end of role names.
+    Counts the number of '+' or '＋' at the end of role names.
     Returns the highest tier the user has.
     """
     max_plus_count = 0
     for role in member.roles:
-        # Count trailing + characters without modifying the role name
+        # Count trailing + or ＋ characters without modifying the role name
         role_name = role.name
         plus_count = 0
         for i in range(len(role_name) - 1, -1, -1):
-            if role_name[i] == '+':
+            if role_name[i] == '+' or role_name[i] == '＋':
                 plus_count += 1
             else:
                 break
@@ -1241,7 +1241,7 @@ def start_bot():
             parts = give_input.split()
             
             for part in parts:
-                if part.startswith("+"):
+                if part.startswith("+") or part.startswith("＋"):
                     try:
                         coin_amount = int(part[1:])
                     except:
@@ -1300,7 +1300,7 @@ def start_bot():
             if give_role_names:
                 trade_summary += f"📥 They will **GIVE**: {', '.join([f'`{name}`' for name in give_role_names])}\n"
             if coin_amount > 0:
-                trade_summary += f"💰 They will **GIVE**: **+{coin_amount} Coins**\n"
+                trade_summary += f"💰 They will **GIVE**: **＋{coin_amount} Coins**\n"
 
             try:
                 await target_member.send(
